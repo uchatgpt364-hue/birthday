@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Birthday Wishes 🎂</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:100%;height:100%;overflow:hidden}
+  body{
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:radial-gradient(circle at 50% 35%,#fff7fb 0%,#ffdce9 38%,#a97cff 100%);
+    color:#4b2140;
+  }
+  .scene{position:relative;width:100%;height:100%;overflow:hidden}
+  .glow{
+    position:absolute;width:55vmin;height:55vmin;border-radius:50%;
+    left:50%;top:42%;transform:translate(-50%,-50%);
+    background:rgba(255,255,255,.48);filter:blur(5px);
+    box-shadow:0 0 100px rgba(255,255,255,.75);
+  }
+
+  /* Intro curtain */
+  .intro{
+    position:absolute;inset:0;z-index:50;display:grid;place-items:center;
+    background:linear-gradient(135deg,#4b1748,#8c3d88 55%,#f08fb2);
+    animation:curtainOut 1.3s 2.1s cubic-bezier(.7,0,.2,1) forwards;
+  }
+  .intro-content{text-align:center;color:white;animation:introPop 1.1s ease-out}
+  .intro-content .mini{font-size:clamp(1rem,3vw,1.4rem);letter-spacing:.3em;text-transform:uppercase;opacity:.85}
+  .intro-content h1{font-family:Georgia,serif;font-size:clamp(3rem,11vw,7rem);line-height:.95;margin:.2em 0}
+  .intro-content p{font-size:1.1rem;opacity:.9}
+  .loader{width:130px;height:4px;background:rgba(255,255,255,.25);margin:25px auto 0;border-radius:9px;overflow:hidden}
+  .loader span{display:block;height:100%;background:white;width:0;animation:load 2s ease-in-out forwards}
+  @keyframes load{to{width:100%}}
+  @keyframes introPop{from{opacity:0;transform:scale(.75) translateY(30px)}to{opacity:1;transform:none}}
+  @keyframes curtainOut{to{opacity:0;visibility:hidden;transform:scale(1.12)}}
+
+  .content{
+    position:relative;z-index:5;width:min(920px,92vw);height:100%;
+    margin:auto;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:30px;
+  }
+  .card{
+    width:min(700px,100%);padding:clamp(28px,6vw,60px);
+    border:1px solid rgba(255,255,255,.7);
+    background:rgba(255,255,255,.45);backdrop-filter:blur(14px);
+    border-radius:36px;box-shadow:0 25px 80px rgba(91,38,95,.22);
+    animation:cardIn 1s 2.25s both cubic-bezier(.2,.9,.2,1);
+  }
+  @keyframes cardIn{from{opacity:0;transform:translateY(70px) scale(.9)}to{opacity:1;transform:none}}
+  .badge{display:inline-block;padding:8px 15px;border-radius:50px;background:#fff;color:#b33e78;font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}
+  h2{font-family:Georgia,serif;font-size:clamp(3rem,9vw,6rem);line-height:.9;margin:18px 0 12px;color:#8d285d}
+  .subtitle{font-size:clamp(1rem,3vw,1.3rem);color:#663454}
+  .message{max-width:560px;margin:20px auto;font-size:1.05rem;line-height:1.7}
+  .cake{font-size:clamp(4rem,11vw,6.5rem);filter:drop-shadow(0 10px 10px rgba(93,30,80,.18));animation:bob 2.5s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-8px) rotate(1deg)}}
+  button{
+    border:0;border-radius:999px;padding:14px 25px;margin-top:12px;
+    background:#8d285d;color:white;font-weight:800;font-size:1rem;cursor:pointer;
+    box-shadow:0 10px 25px rgba(141,40,93,.28);transition:.2s
+  }
+  button:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(141,40,93,.35)}
+  .footer{margin-top:18px;font-size:.85rem;opacity:.65}
+
+  /* Floating birthday decorations */
+  .balloon{position:absolute;width:54px;height:68px;border-radius:50% 50% 45% 45%;z-index:2;animation:float 5s ease-in-out infinite}
+  .balloon:after{content:"";position:absolute;width:1px;height:90px;background:rgba(80,40,70,.28);left:50%;top:65px}
+  .balloon:before{content:"";position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:8px solid currentColor}
+  .b1{left:7%;top:14%;background:#ff719e;color:#ff719e}.b2{right:9%;top:18%;background:#ffd15c;color:#ffd15c;animation-delay:-1s}.b3{left:13%;bottom:12%;background:#7bdff2;color:#7bdff2;animation-delay:-2s}.b4{right:13%;bottom:11%;background:#a78bfa;color:#a78bfa;animation-delay:-3s}
+  @keyframes float{50%{transform:translateY(-22px) rotate(5deg)}}
+
+  .sparkle{position:absolute;color:white;font-size:1.5rem;animation:spark 2s ease-in-out infinite;z-index:3}
+  .s1{left:22%;top:24%}.s2{right:23%;top:31%;animation-delay:.5s}.s3{left:25%;bottom:27%;animation-delay:1s}.s4{right:26%;bottom:22%;animation-delay:1.5s}
+  @keyframes spark{0%,100%{opacity:.25;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.3) rotate(20deg)}}
+
+  .confetti{position:absolute;inset:0;pointer-events:none;z-index:4}
+  .piece{position:absolute;top:-20px;width:9px;height:18px;border-radius:3px;animation:fall linear infinite}
+  @keyframes fall{to{transform:translateY(115vh) rotate(720deg)}}
+
+  @media(max-width:600px){
+    .balloon{width:40px;height:52px}
+    .message{font-size:.95rem}
+    .card{border-radius:28px}
+  }
+</style>
+</head>
+<body>
+<div class="scene">
+  <div class="intro">
+    <div class="intro-content">
+      <div class="mini">A little surprise</div>
+      <h1>🎁</h1>
+      <p>Preparing your birthday wishes...</p>
+      <div class="loader"><span></span></div>
+    </div>
+  </div>
+
+  <div class="glow"></div>
+
+  <div class="balloon b1"></div><div class="balloon b2"></div>
+  <div class="balloon b3"></div><div class="balloon b4"></div>
+  <div class="sparkle s1">✦</div><div class="sparkle s2">✧</div>
+  <div class="sparkle s3">✦</div><div class="sparkle s4">✧</div>
+
+  <div class="confetti" id="confetti"></div>
+
+  <main class="content">
+    <section class="card">
+      <div class="badge">✨ It's your special day ✨</div>
+      <div class="cake">🎂</div>
+      <h2>Happy Birthday, Ganapathi!</h2>
+      <p class="subtitle">Wishing you a day filled with love, laughter & beautiful memories.</p>
+      <p class="message">
+        May this new chapter bring you countless reasons to smile,
+        wonderful adventures, and dreams that come true. Keep shining,
+        keep smiling, and enjoy every magical moment of your day! 💖
+      </p>
+      <button id="celebrate">🎉 Celebrate!</button>
+      <div class="footer">Made with 💕 and a whole lot of birthday magic</div>
+    </section>
+  </main>
+</div>
+
+<script>
+  const box=document.getElementById("confetti");
+  const symbols=["🎈","✨","💖","🎉","⭐","🎊","🌸"];
+  for(let i=0;i<55;i++){
+    const el=document.createElement("span");
+    el.className="piece";
+    el.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+    el.style.left=Math.random()*100+"%";
+    el.style.fontSize=(10+Math.random()*13)+"px";
+    el.style.animationDuration=(4+Math.random()*6)+"s";
+    el.style.animationDelay=(-Math.random()*8)+"s";
+    box.appendChild(el);
+  }
+
+  document.getElementById("celebrate").addEventListener("click",()=>{
+    for(let i=0;i<35;i++){
+      const el=document.createElement("span");
+      el.className="piece";
+      el.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+      el.style.left="50%";
+      el.style.top="48%";
+      el.style.fontSize=(12+Math.random()*16)+"px";
+      el.style.animationDuration=(1.5+Math.random()*2)+"s";
+      el.style.animationDelay=(Math.random()*.4)+"s";
+      el.style.transform=`translateX(${(Math.random()-.5)*500}px)`;
+      box.appendChild(el);
+      setTimeout(()=>el.remove(),4000);
+    }
+  });
+</script>
+</body>
+</html>
